@@ -1,0 +1,49 @@
+.bar{
+	-fx-background-color: transparent;
+}
+.check:hover{
+    -fx-text-fill: red;
+}
+.rate{
+	-fx-effect: dropshadow(three-pass-box,yellow, 10, 0, 0, 0);
+}
+.Mainbutton{
+	-fx-background-color: black;
+	-fx-background-radius: 30;
+}
+.redglowing:hover{
+	-fx-effect: dropshadow(three-pass-box,red, 10, 0, 0, 0);
+	-fx-background-color: red;
+}
+.bleuglowing:hover{
+	-fx-effect: dropshadow(three-pass-box,#1792d4, 10, 0, 0, 0);
+	-fx-background-color: #1792d4;
+}
+.trend:selected{
+	-fx-text-fill: red;
+	-fx-font-weight: bold;
+}
+.radio-button > .radio {
+  -fx-background-color: transparent;
+  -fx-background-insets: 0;
+  -fx-background-radius: 0px;
+  -fx-padding: 0.0em; /* 4 8 4 8 */
+}
+.radio-button:selected > .radio > .dot {
+  -fx-background-color: transparent;
+}
+.check-box > .box, .check-box > .box > .mark {
+  -fx-background-color: transparent;
+  -fx-padding: 0.0em;
+}
+
+.check-box:selected > .box > .mark,.check-box:indeterminate  > .box > .mark {
+  -fx-background-color: transparent;
+}
+.type{
+	-fx-background-color: #18171c;
+	-fx-background-radius: 30;
+}
+.type:selected{
+	-fx-background-color: red;
+}
