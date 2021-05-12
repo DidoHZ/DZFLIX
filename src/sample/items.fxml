@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
@@ -13,12 +15,32 @@
 
 <AnchorPane prefHeight="280.0" prefWidth="200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.itemsController">
    <children>
-      <VBox layoutX="61.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox fx:id="touched" layoutX="61.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 20; -fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fx:id="imgview" fitHeight="231.0" fitWidth="175.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <AnchorPane>
                <VBox.margin>
                   <Insets left="12.0" />
-               </VBox.margin></ImageView>
+               </VBox.margin>
+               <children>
+                  <ImageView fx:id="imgview" fitHeight="231.0" fitWidth="175.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" />
+                  <JFXButton fx:id="Moreinfo" disable="true" layoutX="122.0" layoutY="7.0" prefHeight="26.0" prefWidth="25.0" ripplerFill="WHITE" stylesheets="@App.css" text=" " visible="false">
+                     <graphic>
+                        <ImageView fitHeight="8.0" fitWidth="8.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/plus.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <styleClass>
+                        <String fx:value="Mainbutton" />
+                        <String fx:value="bleuglowing" />
+                     </styleClass>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
             <Pane prefHeight="49.0" prefWidth="200.0" style="-fx-background-color: transparent;">
                <children>
                   <Label fx:id="title_lbl" layoutX="2.0" layoutY="6.0" prefHeight="22.0" prefWidth="200.0" text="Title" textFill="WHITE">

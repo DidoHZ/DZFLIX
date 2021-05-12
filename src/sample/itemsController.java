@@ -1,11 +1,13 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -19,6 +21,12 @@ public class itemsController implements Initializable {
     /*@FXML
     private Pane Pan_img;
      */
+
+    @FXML
+    private VBox touched;
+
+    @FXML
+    private JFXButton Moreinfo;
 
     @FXML
     private Label title_lbl;
@@ -43,7 +51,16 @@ public class itemsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        imgview.addEventHandler(MouseEvent.MOUSE_ENTERED,e->{
+        touched.addEventHandler(MouseEvent.MOUSE_ENTERED,e->{
+            Moreinfo.setDisable(false);
+            Moreinfo.setVisible(true);
+        });
+        touched.addEventHandler(MouseEvent.MOUSE_EXITED,event-> {
+            Moreinfo.setVisible(false);
+            Moreinfo.setDisable(true);
+        });
+        Moreinfo.addEventHandler(MouseEvent.MOUSE_CLICKED,event-> {
+            System.out.println("More Info :");
             JSONreader json = new JSONreader();
             try {
                 items i = json.getDetails(item.getID());
@@ -56,6 +73,5 @@ public class itemsController implements Initializable {
                 ioException.printStackTrace();
             }
         });
-        imgview.addEventHandler(MouseEvent.MOUSE_EXITED,event-> System.out.println("Byy byy"));
     }
 }

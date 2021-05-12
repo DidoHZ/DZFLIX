@@ -62,7 +62,7 @@ public class JSONreader {
         JSONArray myArr = getJSON(new URL(BaseUrl+popular+api+language)).getJSONArray("results");
 
         items item;
-        for(int i=1;i<11;i++){
+        for(int i=1;i<20;i++){
             item = new items();
             System.out.println(myArr.getJSONObject(i));
             item.setID(myArr.getJSONObject(i).getInt("id"));

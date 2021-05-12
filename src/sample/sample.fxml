@@ -82,7 +82,7 @@
                                  <children>
                                     <AnchorPane layoutX="63.0" layoutY="105.0">
                                        <children>
-                                          <Label fx:id="Main_title" layoutY="5.0" prefHeight="42.0" prefWidth="284.0" textFill="WHITE">
+                                          <Label fx:id="Main_title" layoutY="5.0" prefHeight="42.0" prefWidth="325.0" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="35.0" />
                                              </font>
@@ -92,12 +92,12 @@
                                                 <Font name="System Bold" size="8.0" />
                                              </font>
                                           </Label>
-                                          <Label fx:id="Main_describtion" alignment="TOP_LEFT" layoutY="52.0" prefHeight="48.0" prefWidth="335.0" textFill="WHITE" wrapText="true">
+                                          <Label fx:id="Main_describtion" alignment="TOP_LEFT" layoutY="52.0" prefHeight="48.0" prefWidth="350.0" textFill="WHITE" wrapText="true">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </Label>
-                                          <JFXButton alignment="CENTER" layoutY="100.0" onMousePressed="#PlayTrailer" prefHeight="25.0" prefWidth="71.0" ripplerFill="RED" stylesheets="@App.css" text="Watch" textFill="WHITE">
+                                          <JFXButton alignment="CENTER" layoutY="100.0" onMousePressed="#PlayTrailer" prefHeight="25.0" prefWidth="71.0" ripplerFill="#ff7676" stylesheets="@App.css" text="Watch" textFill="WHITE">
                                              <effect>
                                                 <Lighting>
                                                    <bumpInput>
@@ -126,7 +126,7 @@
                                                 <String fx:value="redglowing" />
                                              </styleClass>
                                           </JFXButton>
-                                          <JFXButton alignment="CENTER" layoutX="88.0" layoutY="100.0" prefHeight="25.0" prefWidth="71.0" ripplerFill="RED" stylesheets="@App.css" text="Add list" textFill="WHITE">
+                                          <JFXButton alignment="CENTER" layoutX="88.0" layoutY="100.0" prefHeight="25.0" prefWidth="71.0" ripplerFill="WHITE" stylesheets="@App.css" text="Add list" textFill="WHITE">
                                              <effect>
                                                 <Lighting>
                                                    <bumpInput>
