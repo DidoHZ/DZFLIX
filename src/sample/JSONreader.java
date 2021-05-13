@@ -44,10 +44,16 @@ public class JSONreader {
         item.setBackground(jsonObj.getString("backdrop_path"));
         item.setTitle(jsonObj.getString("title"));
         item.setDate(jsonObj.getString("release_date").split("-")[0]);
-        item.setRate(""+jsonObj.getInt("vote_average"));
+        item.setRate(""+jsonObj.getDouble("vote_average"));
         item.setDuration(jsonObj.getInt("runtime"));
         item.setDescription(jsonObj.getString("overview"));
-
+        item.setLanguage(jsonObj.getString("original_language"));
+        JSONArray test = jsonObj.getJSONArray("genres");
+        String[] str = new String[10];
+        for(int i=0;i<test.length();i++)
+            str[i] = test.getJSONObject(0).getString("name");
+        item.setGenres(str);
+        item.setTagline(jsonObj.getString("tagline"));
         return item;
     }
 

@@ -2,20 +2,32 @@ package sample;
 
 public class items {
     private int ID;
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
     private String Title;
     private String imgUrl;
-    private String Type;
+    private String[] Genres = new String[10];
     private String Description;
     private int Duration;
+    private String Background;
+    private String rate;
+    private String Date;
+    private String Tagline;
+    private String Language;
+
+    public String getLanguage() {
+        return Language;
+    }
+
+    public void setLanguage(String language) {
+        Language = language;
+    }
+
+    public String getTagline() {
+        return Tagline;
+    }
+
+    public void setTagline(String tagline) {
+        Tagline = tagline;
+    }
 
     public String getBackground() {
         return Background;
@@ -25,9 +37,13 @@ public class items {
         Background = background;
     }
 
-    private String Background;
-    private String rate;
-    private String Date;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
 
     public String getDescription() {
         return Description;
@@ -37,12 +53,12 @@ public class items {
         Description = description;
     }
 
-    public String getType() {
-        return Type;
+    public String[] getGenres() {
+        return Genres;
     }
 
-    public void setType(String type) {
-        Type = type;
+    public void setGenres(String[] genres) {
+        Genres = genres;
     }
 
     public int getDuration() {

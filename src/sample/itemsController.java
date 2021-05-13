@@ -2,13 +2,19 @@ package sample;
 
 import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import org.json.JSONException;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,17 +67,27 @@ public class itemsController implements Initializable {
         });
         Moreinfo.addEventHandler(MouseEvent.MOUSE_CLICKED,event-> {
             System.out.println("More Info :");
-            JSONreader json = new JSONreader();
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/Details.fxml"));
+
+            Scene scene = null;
             try {
-                items i = json.getDetails(item.getID());
-                System.out.println("ID : "+item.getID());
-                System.out.println("Title : "+i.getTitle());
-                System.out.println("Duration : "+i.getDuration());
-                System.out.println("Date : "+i.getDate());
-                System.out.println("Description : "+i.getDescription()+"\n");
-            } catch (IOException | JSONException ioException) {
-                ioException.printStackTrace();
+                scene = new Scene(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            scene.setFill(Color.TRANSPARENT);
+            Details details = loader.getController();
+            details.setData(stage,item.getID());
+
+            stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setScene(scene);
+            stage.show();
         });
     }
 }
