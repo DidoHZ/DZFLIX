@@ -5,7 +5,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.effect.Light.Distant?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.effect.Shadow?>
@@ -16,14 +15,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="450.0" style="-fx-background-color: rgb(0,0,0,0) rgb(0,0,0,0); -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Details">
+<AnchorPane prefHeight="550.0" prefWidth="450.0" style="-fx-background-color: rgb(0,0,0,0) rgb(0,0,0,0);" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Details">
    <children>
-      <ScrollPane hbarPolicy="NEVER" style="-fx-background-color: rgb(0,0,0,0);" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <VBox prefHeight="550.0" prefWidth="450.0" style="-fx-background-radius: 20; -fx-background-color: #46444d;">
+            <VBox prefHeight="550.0" prefWidth="450.0" style="-fx-background-color: #46444d;">
                <children>
                   <Pane fx:id="Main_show" prefHeight="210.0" prefWidth="450.0">
                      <children>
@@ -56,7 +54,7 @@
                               <String fx:value="redglowing" />
                            </styleClass>
                         </JFXButton>
-                        <JFXButton alignment="CENTER" layoutX="86.0" layoutY="162.0" prefHeight="25.0" prefWidth="26.0" ripplerFill="WHITE" stylesheets="@App.css" text=" " textFill="WHITE">
+                        <JFXButton alignment="CENTER" layoutX="86.0" layoutY="162.0" onAction="#Addmylist" prefHeight="25.0" prefWidth="26.0" ripplerFill="WHITE" stylesheets="@App.css" text=" " textFill="WHITE">
                            <effect>
                               <Lighting>
                                  <bumpInput>
@@ -82,37 +80,30 @@
                               <String fx:value="bleuglowing" />
                            </styleClass>
                         </JFXButton>
-                        <Label fx:id="title" alignment="TOP_LEFT" layoutX="14.0" layoutY="122.0" prefHeight="39.0" prefWidth="313.0" text="How to train your dragon" textFill="WHITE" wrapText="true">
+                        <Label fx:id="title" alignment="TOP_LEFT" layoutX="14.0" layoutY="122.0" prefHeight="39.0" prefWidth="313.0" textFill="WHITE" wrapText="true">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <ImageView fx:id="exit" fitHeight="24.0" fitWidth="24.0" layoutX="412.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/close.png" />
-                           </image>
-                        </ImageView>
+                        <JFXButton fx:id="exit" layoutX="407.0" layoutY="14.0" prefHeight="29.0" prefWidth="30.0" styleClass="exit" stylesheets="@App.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font name="Segoe UI Historic" size="12.0" />
+                           </font>
+                        </JFXButton>
                      </children>
-                     <effect>
-                        <InnerShadow choke="0.44" height="60.11" offsetY="-10.0" radius="14.5275" width="0.0">
-                           <color>
-                              <Color red="0.27450981736183167" green="0.2666666805744171" blue="0.3019607961177826" />
-                           </color>
-                        </InnerShadow>
-                     </effect>
                   </Pane>
                   <Pane prefHeight="254.0" prefWidth="450.0">
                      <children>
-                        <Label fx:id="ryd" layoutX="14.0" layoutY="5.0" prefHeight="33.0" prefWidth="247.0" text="IMDb 8.6 | 2021 | 1h26min" textFill="WHITE">
+                        <Label fx:id="ryd" layoutX="14.0" layoutY="5.0" prefHeight="33.0" prefWidth="247.0" textFill="WHITE">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="Describtion" alignment="TOP_LEFT" layoutX="14.0" layoutY="45.0" prefHeight="143.0" prefWidth="313.0" text="How to Train Your Dragon was hugely popular when it first released over 10 years ago. Set in the Viking village of Berk, Hiccup and his dragon, Toothless, capture imaginations all over the world in their adventures." textFill="WHITE" wrapText="true" />
+                        <Label fx:id="Describtion" alignment="TOP_LEFT" layoutX="14.0" layoutY="45.0" prefHeight="143.0" prefWidth="313.0" textFill="WHITE" wrapText="true" />
                         <ImageView fx:id="img" fitHeight="150.0" fitWidth="116.0" layoutX="329.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
-                        <Label fx:id="language" layoutX="14.0" layoutY="188.0" prefHeight="20.0" prefWidth="435.0" text="Language :" textFill="WHITE" />
-                        <Label fx:id="Genres" layoutX="14.0" layoutY="208.0" prefHeight="20.0" prefWidth="435.0" text="Genres :" textFill="WHITE" />
-                        <Label fx:id="Tagline" layoutX="14.0" layoutY="228.0" prefHeight="20.0" prefWidth="435.0" text="Tagline :" textFill="WHITE" />
+                        <Label fx:id="language" layoutX="14.0" layoutY="188.0" prefHeight="20.0" prefWidth="435.0" textFill="WHITE" />
+                        <Label fx:id="Genres" layoutX="14.0" layoutY="208.0" prefHeight="20.0" prefWidth="435.0" textFill="WHITE" />
+                        <Label fx:id="Tagline" layoutX="14.0" layoutY="228.0" prefHeight="20.0" prefWidth="435.0" textFill="WHITE" />
                      </children>
                   </Pane>
                   <GridPane fx:id="Similar">

@@ -47,3 +47,14 @@
 .type:selected{
 	-fx-background-color: red;
 }
+.exit{
+	-fx-background-radius: 50%;
+	-fx-background-color: transparent;
+	-fx-border-color: white;
+	-fx-border-radius: 50%;
+	-fx-border-width: 2px;
+	-fx-opacity: 0.4;
+}
+.exit:hover{
+	-fx-opacity: 1;
+}

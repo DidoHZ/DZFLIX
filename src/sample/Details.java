@@ -1,5 +1,7 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -43,7 +45,7 @@ public class Details implements Initializable {
     private GridPane Similar;
 
     @FXML
-    private ImageView exit;
+    private JFXButton exit;
 
 
     private items item = new items();
@@ -58,19 +60,28 @@ public class Details implements Initializable {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("http://image.tmdb.org/t/p/original/"+item.getBackground());
+        System.out.println("http://image.tmdb.org/t/p/original/"+item.getBackground()+"\nID : "+ ID);
+        Main_show.setId(""+ID);
         Main_show.setStyle("-fx-background-image: url(http://image.tmdb.org/t/p/original"+item.getBackground()+"); -fx-background-repeat: no-repeat; -fx-background-size: 450px 210px;");
         img.setImage(new Image("http://image.tmdb.org/t/p/original"+item.getImgUrl()));
+        img.setSmooth(true);
         title.setText(item.getTitle());
         ryd.setText("IMDb "+item.getRate()+" | "+item.getDate()+" | "+(item.getDuration()>60?(item.getDuration()/60+"h"+ item.getDuration()%60+"min"):item.getDuration()+"min"));
-        Describtion.setText(item.getDescription());
+        Describtion.setText("Description :\n"+item.getDescription());
         language.setText("Language : "+item.getLanguage());
-        Genres.setText("Genres : "+ String.join(",",item.getGenres()));
+        Genres.setText("Genres : "+ String.join(",",item.getGenres()).replace(",null",""));
         Tagline.setText("Tagline : "+item.getTagline());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void Addmylist(ActionEvent ae) {
+        Pane pane = (Pane) ((JFXButton) ae.getSource()).getParent();
+        System.out.println("Add to list ID : "+pane);
+        if(!Controller.getmylist().contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]",""))))
+            Controller.getmylist().add(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")));
     }
 }

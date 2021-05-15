@@ -1,5 +1,6 @@
 package sample;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -33,8 +34,22 @@ public class Controller implements Initializable {
     @FXML
     private GridPane grid;
 
+    @FXML
+    private AnchorPane Mylist;
+
+    @FXML
+    private AnchorPane Home;
+
+    @FXML
+    private GridPane gridList;
+
     private final JSONreader json = new JSONreader();
     private List<items> items = new ArrayList<>();
+    private static ArrayList<Integer>  MyList = new ArrayList<>();
+
+    static ArrayList<Integer>getmylist(){
+        return MyList;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -83,6 +98,34 @@ public class Controller implements Initializable {
     }
 
     public void PlayTrailer(MouseEvent event) {
+
+    }
+
+    public void Mylist(ActionEvent actionEvent) throws JSONException, IOException {
+        Mylist.toFront();
+        JSONreader json = new JSONreader();
+        System.out.println(MyList);
+        int r = 0;
+        for(int id:MyList){
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/sample/Mylist.fxml"));
+
+            AnchorPane ap = loader.load();
+
+            Mylist mylist = loader.getController();
+            mylist.setData(json.getDetails(id));
+
+            gridList.add(ap,0,r++);
+            GridPane.setMargin(ap, new Insets(40,50,10,10));
+            System.out.println("Done");
+        }
+    }
+
+    public void Home(ActionEvent actionEvent) {
+        Home.toFront();
+    }
+
+    public void Addlist(ActionEvent actionEvent)  {
 
     }
 }

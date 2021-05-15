@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +51,11 @@ public class JSONreader {
         item.setLanguage(jsonObj.getString("original_language"));
         JSONArray test = jsonObj.getJSONArray("genres");
         String[] str = new String[10];
-        for(int i=0;i<test.length();i++)
-            str[i] = test.getJSONObject(0).getString("name");
+        System.out.println("genres length : "+test.length());
+        for(int i=0;i<test.length();i++) {
+            str[i] = test.getJSONObject(i).getString("name");
+            System.out.println(i+"-"+str[i]);
+        }
         item.setGenres(str);
         item.setTagline(jsonObj.getString("tagline"));
         return item;
@@ -61,15 +65,30 @@ public class JSONreader {
         return getDetails(getJSON(new URL(BaseUrl+popular+api+language)).getJSONArray("results").getJSONObject(0).getInt("id"));
     }
 
+    public ArrayList<items> Search(String str) throws IOException, JSONException {
+        ArrayList<items> items = new ArrayList<>();
+        JSONArray myArr = getJSON(new URL(BaseUrl+"/Search/movie"+api+Search+str)).getJSONArray("result");
+
+        for(int i=0;i<5;i++){
+            items item = new items();
+            System.out.println("Search"+myArr.getJSONObject(i));
+            item.setID(myArr.getJSONObject(i).getInt("id"));
+            item.setImgUrl("http://image.tmdb.org/t/p/original/"+myArr.getJSONObject(i).getString("poster_path"));
+            item.setTitle(myArr.getJSONObject(i).getString("title"));
+            item.setDate(myArr.getJSONObject(i).getString("release_date").split("-")[0]);
+            items.add(item);
+        }
+        return items;
+    }
+
     public List<items> get_popular() throws Exception {
 
         List<items> items = new ArrayList<>();
 
         JSONArray myArr = getJSON(new URL(BaseUrl+popular+api+language)).getJSONArray("results");
 
-        items item;
         for(int i=1;i<20;i++){
-            item = new items();
+            items item = new items();
             System.out.println(myArr.getJSONObject(i));
             item.setID(myArr.getJSONObject(i).getInt("id"));
             item.setImgUrl("http://image.tmdb.org/t/p/original/"+myArr.getJSONObject(i).getString("poster_path"));

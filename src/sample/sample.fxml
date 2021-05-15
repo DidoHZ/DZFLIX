@@ -16,6 +16,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -26,7 +27,7 @@
 <BorderPane maxHeight="600.0" maxWidth="900.0" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <top>
       <HBox prefHeight="46.0" prefWidth="900.0" style="-fx-background-color: white;" styleClass="bar" stylesheets="@App.css" BorderPane.alignment="CENTER">
-         <JFXButton alignment="CENTER" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" text="NETFLIX" textFill="RED">
+         <JFXButton alignment="CENTER" onAction="#Home" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" text="NETFLIX" textFill="RED">
             <HBox.margin>
                <Insets left="25.0" right="200.0" />
             </HBox.margin>
@@ -34,7 +35,7 @@
                <Font size="13.0" />
             </font>
          </JFXButton>
-         <JFXButton alignment="CENTER" layoutX="144.0" layoutY="10.0" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" styleClass="check" text="Home">
+         <JFXButton alignment="CENTER" layoutX="144.0" layoutY="10.0" onAction="#Home" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" styleClass="check" text="Home">
             <HBox.margin>
                <Insets right="30.0" />
             </HBox.margin></JFXButton>
@@ -48,7 +49,7 @@
                <Insets right="30.0" />
             </HBox.margin>
          </JFXButton>
-         <JFXButton alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" styleClass="check" stylesheets="@App.css" text="My list">
+         <JFXButton alignment="CENTER" layoutX="10.0" layoutY="10.0" onAction="#Mylist" prefHeight="46.0" prefWidth="94.0" ripplerFill="#86b5e8" styleClass="check" stylesheets="@App.css" text="My list">
             <HBox.margin>
                <Insets right="30.0" />
             </HBox.margin>
@@ -61,18 +62,33 @@
       </HBox>
    </top>
    <center>
-      <AnchorPane style="-fx-background-color: #0d0c11;" BorderPane.alignment="CENTER">
+      <AnchorPane style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="Mylist" style="-fx-background-color: #0d0c11;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <ScrollPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="544.0" prefWidth="900.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
-                        <VBox style="-fx-background-color: #0d0c11;" />
+                        <VBox style="-fx-background-color: #0d0c11;">
+                           <children>
+                              <Label alignment="TOP_LEFT" prefHeight="11.0" prefWidth="900.0" text="My List :" textFill="WHITE">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="15.0" />
+                                 </padding>
+                              </Label>
+                              <GridPane fx:id="gridList">
+                                 <columnConstraints>
+                                    <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                              </GridPane>
+                           </children></VBox>
                      </content>
                   </ScrollPane>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="10.0" layoutY="10.0" prefWidth="900.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="Home" layoutX="10.0" layoutY="10.0" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: #0d0c11;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <content>
@@ -126,7 +142,7 @@
                                                 <String fx:value="redglowing" />
                                              </styleClass>
                                           </JFXButton>
-                                          <JFXButton alignment="CENTER" layoutX="88.0" layoutY="100.0" prefHeight="25.0" prefWidth="71.0" ripplerFill="WHITE" stylesheets="@App.css" text="Add list" textFill="WHITE">
+                                          <JFXButton alignment="CENTER" layoutX="88.0" layoutY="100.0" onAction="#Addlist" prefHeight="25.0" prefWidth="71.0" ripplerFill="WHITE" stylesheets="@App.css" text="Add list" textFill="WHITE">
                                              <effect>
                                                 <Lighting>
                                                    <bumpInput>
@@ -239,7 +255,7 @@
                                     </CheckBox>
                                  </children>
                               </HBox>
-                              <GridPane fx:id="grid" prefHeight="0.0" prefWidth="644.0">
+                              <GridPane fx:id="grid">
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" />
                                  </rowConstraints>

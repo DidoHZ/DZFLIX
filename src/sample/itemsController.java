@@ -11,8 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -51,7 +49,7 @@ public class itemsController implements Initializable {
         date_lbl.setText(item.getDate());
         //Pan_img.setStyle("-fx-background-image: url(\""+item.getImgUrl()+"\"); -fx-background-repeat: no-repeat; -fx-background-size: 200 232;");
         rate_lbl.setText(item.getRate());
-        imgview.setImage(new Image(item.getImgUrl()));
+        imgview.setImage(new Image("http://image.tmdb.org/t/p/original"+item.getImgUrl()));
     }
 
 
@@ -78,12 +76,10 @@ public class itemsController implements Initializable {
                 e.printStackTrace();
             }
 
-            scene.setFill(Color.TRANSPARENT);
             Details details = loader.getController();
             details.setData(stage,item.getID());
 
             stage.initOwner(((Node)event.getSource()).getScene().getWindow());
-            stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.TRANSPARENT);
 
             stage.setScene(scene);
