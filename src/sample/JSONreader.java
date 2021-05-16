@@ -41,6 +41,7 @@ public class JSONreader {
         items item = new items();
         JSONObject jsonObj = getJSON(new URL(BaseUrl+details+id+api+language));
 
+        item.setID(id);
         item.setImgUrl(jsonObj.getString("poster_path"));
         item.setBackground(jsonObj.getString("backdrop_path"));
         item.setTitle(jsonObj.getString("title"));

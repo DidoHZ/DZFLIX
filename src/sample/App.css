@@ -58,3 +58,14 @@
 .exit:hover{
 	-fx-opacity: 1;
 }
+.delete{
+	-fx-background-radius: 50%;
+	-fx-background-color: white;
+	-fx-border-color: red;
+	-fx-border-radius: 50%;
+	-fx-opacity: 0.4;
+}
+.delete:hover{
+	-fx-background-color: red;
+	-fx-opacity: 1;
+}

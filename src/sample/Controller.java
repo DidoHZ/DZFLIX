@@ -43,10 +43,15 @@ public class Controller implements Initializable {
     @FXML
     private GridPane gridList;
 
+    private static GridPane GridlistPane;
+
     private final JSONreader json = new JSONreader();
     private List<items> items = new ArrayList<>();
     private static ArrayList<Integer>  MyList = new ArrayList<>();
 
+    static GridPane getmylistGrid_(){
+        return GridlistPane;
+    }
     static ArrayList<Integer>getmylist(){
         return MyList;
     }
@@ -95,6 +100,7 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        GridlistPane = gridList;
     }
 
     public void PlayTrailer(MouseEvent event) {
@@ -105,6 +111,8 @@ public class Controller implements Initializable {
         Mylist.toFront();
         JSONreader json = new JSONreader();
         System.out.println(MyList);
+        if(!gridList.getChildren().isEmpty())
+            gridList.getChildren().removeAll(gridList.getChildren());
         int r = 0;
         for(int id:MyList){
             FXMLLoader loader = new FXMLLoader();
