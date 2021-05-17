@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.JSONException;
 
 import java.io.IOException;
 
@@ -35,7 +36,7 @@ public class Mylist {
 
     public void setData(items item){
         this.item = item;
-        list_img.setImage(new Image("http://image.tmdb.org/t/p/original/"+item.getImgUrl()));
+        list_img.setImage(new Image("http://image.tmdb.org/t/p/w154/"+item.getImgUrl()));
         rate_lbl.setText(item.getRate());
         list_title.setText(item.getTitle());
         list_descrbtion.setText(item.getDescription());
@@ -44,29 +45,52 @@ public class Mylist {
     @FXML
     void delete() {
         Controller.getmylistGrid_().getChildren().remove(Controller.getmylistGrid_().getChildren().get(Controller.getmylist().indexOf(item.getID())));
-        Controller.getmylist().remove((Integer) item.getID());
+        try {
+            Controller.getmylist().remove((Integer) item.getID());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
-    public void MoreDetails(ActionEvent event) {
+    public void MoreDetails(ActionEvent event) throws JSONException, IOException {
         System.out.println("More Info :");
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/sample/Details.fxml"));
+        if(item.getType().equals("movie")) {
+            loader.setLocation(getClass().getResource("/sample/Details.fxml"));
 
-        Scene scene = null;
-        try {
-            scene = new Scene(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
+            Scene scene = null;
+            try {
+                scene = new Scene(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Details details = loader.getController();
+            details.setData(stage, item.getID());
+
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setScene(scene);
+        }else{
+            loader.setLocation(getClass().getResource("/sample/SeriesDetails.fxml"));
+
+            Scene scene = null;
+            try {
+                scene = new Scene(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            SeriesDetails details = loader.getController();
+            details.setData(stage, item.getID());
+
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setScene(scene);
         }
-
-        Details details = loader.getController();
-        details.setData(stage,item.getID());
-
-        stage.initOwner(((Node)event.getSource()).getScene().getWindow());
-        stage.initStyle(StageStyle.TRANSPARENT);
-
-        stage.setScene(scene);
         stage.show();
     }
 

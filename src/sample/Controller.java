@@ -1,6 +1,5 @@
 package sample;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,7 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.json.JSONException;
 
@@ -46,8 +44,8 @@ public class Controller implements Initializable {
     private static GridPane GridlistPane;
 
     private final JSONreader json = new JSONreader();
-    private List<items> items = new ArrayList<>();
-    private static ArrayList<Integer>  MyList = new ArrayList<>();
+    private final List<items> items = new ArrayList<>();
+    private static final ArrayList<Integer>  MyList = new ArrayList<>();
 
     static GridPane getmylistGrid_(){
         return GridlistPane;
@@ -61,12 +59,12 @@ public class Controller implements Initializable {
         items fitem = new items();
 
         try {
-            fitem = json.getMostPopular();
+            fitem = json.getMostTrends();
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
-        BackgroundImage myBI= new BackgroundImage(new Image("http://image.tmdb.org/t/p/original/"+fitem.getBackground(),900,300,false,true),
+        BackgroundImage myBI= new BackgroundImage(new Image("http://image.tmdb.org/t/p/w780/"+fitem.getBackground(),900,300,false,true),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
 
@@ -76,7 +74,7 @@ public class Controller implements Initializable {
         Main_title.setText(fitem.getTitle());
 
         try {
-            items.addAll(json.get_popular());
+            items.addAll(json.get_Trends());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,11 +101,11 @@ public class Controller implements Initializable {
         GridlistPane = gridList;
     }
 
-    public void PlayTrailer(MouseEvent event) {
+    public void PlayTrailer() {
 
     }
 
-    public void Mylist(ActionEvent actionEvent) throws JSONException, IOException {
+    public void Mylist() throws JSONException, IOException {
         Mylist.toFront();
         JSONreader json = new JSONreader();
         System.out.println(MyList);
@@ -115,25 +113,39 @@ public class Controller implements Initializable {
             gridList.getChildren().removeAll(gridList.getChildren());
         int r = 0;
         for(int id:MyList){
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/sample/Mylist.fxml"));
+            if(json.CheckType(id).equals("movie")) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/sample/Mylist.fxml"));
 
-            AnchorPane ap = loader.load();
+                AnchorPane ap = loader.load();
 
-            Mylist mylist = loader.getController();
-            mylist.setData(json.getDetails(id));
+                Mylist mylist = loader.getController();
+                mylist.setData(json.getMovieDetails(id));
 
-            gridList.add(ap,0,r++);
-            GridPane.setMargin(ap, new Insets(40,50,10,10));
-            System.out.println("Done");
+                gridList.add(ap, 0, r++);
+                GridPane.setMargin(ap, new Insets(40, 50, 10, 10));
+                System.out.println("Done");
+            }else{
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource("/sample/Mylist.fxml"));
+
+                AnchorPane ap = loader.load();
+
+                Mylist mylist = loader.getController();
+                mylist.setData(json.getSeriesDetails(id));
+
+                gridList.add(ap, 0, r++);
+                GridPane.setMargin(ap, new Insets(40, 50, 10, 10));
+                System.out.println("Done");
+            }
         }
     }
 
-    public void Home(ActionEvent actionEvent) {
+    public void Home() {
         Home.toFront();
     }
 
-    public void Addlist(ActionEvent actionEvent)  {
+    public void Addlist()  {
 
     }
 }

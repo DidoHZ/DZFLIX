@@ -62,7 +62,7 @@
       </HBox>
    </top>
    <center>
-      <AnchorPane style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+      <AnchorPane style="-fx-background-color: #0d0c11;" BorderPane.alignment="CENTER">
          <children>
             <AnchorPane fx:id="Mylist" style="-fx-background-color: #0d0c11;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -96,9 +96,9 @@
                            <children>
                               <Pane fx:id="Main_img" prefHeight="300.0" prefWidth="900.0" VBox.vgrow="ALWAYS">
                                  <children>
-                                    <AnchorPane layoutX="63.0" layoutY="105.0">
+                                    <AnchorPane layoutX="63.0" layoutY="105.0" prefHeight="125.0" prefWidth="395.0">
                                        <children>
-                                          <Label fx:id="Main_title" layoutY="5.0" prefHeight="42.0" prefWidth="325.0" textFill="WHITE">
+                                          <Label fx:id="Main_title" layoutY="5.0" prefHeight="47.0" prefWidth="656.0" textFill="WHITE">
                                              <font>
                                                 <Font name="System Bold" size="35.0" />
                                              </font>

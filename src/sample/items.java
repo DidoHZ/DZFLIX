@@ -4,6 +4,7 @@ public class items {
     private int ID;
     private String Title;
     private String imgUrl;
+    private String type;
     private String[] Genres = new String[10];
     private String Description;
     private int Duration;
@@ -12,6 +13,10 @@ public class items {
     private String Date;
     private String Tagline;
     private String Language;
+
+    public String getType() { return type; }
+
+    public void setType(String type) { this.type = type; }
 
     public String getLanguage() {
         return Language;

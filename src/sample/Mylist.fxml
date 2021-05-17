@@ -13,7 +13,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane onMouseEntered="#Show" onMouseExited="#Hide" prefHeight="150.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Mylist">
+<AnchorPane onMouseEntered="#Show" onMouseExited="#Hide" prefHeight="150.0" prefWidth="900.0" style="-fx-background-color: #0d0c11;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Mylist">
    <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <ImageView fx:id="list_img" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
@@ -26,7 +26,7 @@
                <Font size="18.0" />
             </font>
          </Label>
-         <Label fx:id="list_descrbtion" alignment="TOP_LEFT" layoutX="14.0" layoutY="41.0" prefHeight="113.0" prefWidth="385.0" textFill="WHITE" wrapText="true" />
+         <Label fx:id="list_descrbtion" alignment="TOP_LEFT" layoutX="14.0" layoutY="41.0" prefHeight="113.0" prefWidth="404.0" textFill="WHITE" wrapText="true" />
          <Label fx:id="rate_lbl" alignment="CENTER_RIGHT" layoutX="267.0" layoutY="17.0" prefHeight="22.0" prefWidth="45.0" textAlignment="JUSTIFY" textFill="WHITE">
             <graphic>
                <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

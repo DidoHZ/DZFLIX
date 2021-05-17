@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="150.0" maxWidth="450.0" prefHeight="140.0" prefWidth="440.0" styleClass="episodehover" stylesheets="@App.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Episode">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView fx:id="Episode_img" fitHeight="100.0" fitWidth="140.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets left="10.0" top="25.0" />
+               </HBox.margin>
+            </ImageView>
+            <Pane prefHeight="150.0" prefWidth="300.0">
+               <children>
+                  <Label fx:id="Episode_Title" layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="250.0" textFill="WHITE" />
+                  <Label fx:id="Episode_Description" alignment="TOP_LEFT" layoutX="14.0" layoutY="41.0" prefHeight="100.0" prefWidth="281.0" textFill="WHITE" wrapText="true" />
+               </children>
+            </Pane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -69,3 +69,15 @@
 	-fx-background-color: red;
 	-fx-opacity: 1;
 }
+.choice-box > * {
+	 -fx-background-color: black;
+}
+.choice-box .context-menu {
+	 -fx-background-color: black;
+}
+.choice-box > .label {
+	 -fx-text-fill: white;
+}
+.choice-box .menu-item > .label {
+	 -fx-text-fill: white;
+}

@@ -13,6 +13,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,10 +22,6 @@ import java.util.ResourceBundle;
 public class itemsController implements Initializable {
     @FXML
     private ImageView imgview;
-
-    /*@FXML
-    private Pane Pan_img;
-     */
 
     @FXML
     private VBox touched;
@@ -49,7 +46,7 @@ public class itemsController implements Initializable {
         date_lbl.setText(item.getDate());
         //Pan_img.setStyle("-fx-background-image: url(\""+item.getImgUrl()+"\"); -fx-background-repeat: no-repeat; -fx-background-size: 200 232;");
         rate_lbl.setText(item.getRate());
-        imgview.setImage(new Image("http://image.tmdb.org/t/p/original"+item.getImgUrl()));
+        imgview.setImage(new Image("http://image.tmdb.org/t/p/w154"+item.getImgUrl()));
     }
 
 
@@ -64,9 +61,10 @@ public class itemsController implements Initializable {
             Moreinfo.setDisable(true);
         });
         Moreinfo.addEventHandler(MouseEvent.MOUSE_CLICKED,event-> {
-            System.out.println("More Info :");
-            Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader();
+        System.out.println("More Info :");
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader();
+        if(item.getType().equals("movie")) {
             loader.setLocation(getClass().getResource("/sample/Details.fxml"));
 
             Scene scene = null;
@@ -77,13 +75,36 @@ public class itemsController implements Initializable {
             }
 
             Details details = loader.getController();
-            details.setData(stage,item.getID());
+            details.setData(stage, item.getID());
 
-            stage.initOwner(((Node)event.getSource()).getScene().getWindow());
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.initStyle(StageStyle.TRANSPARENT);
 
             stage.setScene(scene);
-            stage.show();
+        }else{
+            loader.setLocation(getClass().getResource("/sample/SeriesDetails.fxml"));
+
+            Scene scene = null;
+            try {
+                scene = new Scene(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            SeriesDetails details = loader.getController();
+            try {
+                details.setData(stage, item.getID());
+            } catch (JSONException | IOException e) {
+                e.printStackTrace();
+            }
+
+            stage.initOwner(((Node) event.getSource()).getScene().getWindow());
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            stage.setScene(scene);
+        }
+        stage.show();
         });
+
     }
 }
