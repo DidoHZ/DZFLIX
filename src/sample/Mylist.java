@@ -48,12 +48,10 @@ public class Mylist {
         try {
             Controller.getmylist().remove((Integer) item.getID());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
         }
     }
 
     public void MoreDetails(ActionEvent event) throws JSONException, IOException {
-        System.out.println("More Info :");
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         if(item.getType().equals("movie")) {

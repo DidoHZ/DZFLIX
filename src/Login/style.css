@@ -1,0 +1,20 @@
+#text-field {
+    -fx-background-color: -fx-text-box-border , white;
+    -fx-background-insets: 0, 0 0 1 0 ;
+    -fx-background-radius: 0 ;
+}
+#text-field:focused {
+    -fx-background-color:  red, white;
+}
+.button{
+	-fx-background-radius:  30px;
+	-fx-background-color: white;
+	-fx-border-color:  red;
+	-fx-border-radius: 30px;
+}
+.button:hover{
+	-fx-background-color: red;
+}
+.edit:hover{
+    -fx-text-fill: red;
+}

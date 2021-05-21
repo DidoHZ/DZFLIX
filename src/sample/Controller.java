@@ -1,14 +1,22 @@
 package sample;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -22,62 +30,64 @@ public class Controller implements Initializable {
     public Label Main_duration;
     public Label Main_title;
     public Pane Main_img;
-
+    public ImageView MainAdd_img;
     @FXML
     private ScrollPane scroll;
-
     @FXML
     private ToggleGroup Trend;
-
     @FXML
     private GridPane grid;
-
     @FXML
     private AnchorPane Mylist;
-
     @FXML
     private AnchorPane Home;
-
     @FXML
     private GridPane gridList;
-
+    @FXML
+    private JFXButton Profile;
+    @FXML
+    private AnchorPane Menu;
+    @FXML
+    private JFXButton Login;
+    @FXML
+    private JFXButton Signup;
+    @FXML
+    private JFXButton Exit;
     private static GridPane GridlistPane;
-
     private final JSONreader json = new JSONreader();
-    private final List<items> items = new ArrayList<>();
     private static final ArrayList<Integer>  MyList = new ArrayList<>();
+    private boolean connected;
+    private String UserID;
 
-    static GridPane getmylistGrid_(){
-        return GridlistPane;
-    }
+    static GridPane getmylistGrid_(){ return GridlistPane; }
     static ArrayList<Integer>getmylist(){
         return MyList;
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        items fitem = new items();
-
+    public void initialize(URL url, ResourceBundle resourceBundle){
         try {
-            fitem = json.getMostTrends();
+            items fitem = json.getMostTrends();
+            Main_img.setBackground(new Background(new BackgroundImage(new Image("http://image.tmdb.org/t/p/w780/"+fitem.getBackground(),900,300,false,true),
+                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                    BackgroundSize.DEFAULT)));
+            Main_img.setId(""+fitem.getID());
+            Main_describtion.setText(fitem.getDescription());
+            Main_duration.setText("duration "+(fitem.getDuration()>60?(fitem.getDuration()/60+"h"+ fitem.getDuration()%60+"min"):fitem.getDuration()+"min"));
+            Main_title.setText(fitem.getTitle());
         } catch (JSONException | IOException e) {
             e.printStackTrace();
         }
 
-        BackgroundImage myBI= new BackgroundImage(new Image("http://image.tmdb.org/t/p/w780/"+fitem.getBackground(),900,300,false,true),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-                BackgroundSize.DEFAULT);
-
-        Main_img.setBackground(new Background(myBI));
-        Main_describtion.setText(fitem.getDescription());
-        Main_duration.setText("duration "+(fitem.getDuration()>60?(fitem.getDuration()/60+"h"+ fitem.getDuration()%60+"min"):fitem.getDuration()+"min"));
-        Main_title.setText(fitem.getTitle());
-
-        try {
-            items.addAll(json.get_Trends());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        List<items> items = new ArrayList<items>(){
+            {
+                try {
+                    this.addAll(json.get_Trends());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
 
         int c = 0,r = 1;
         try {
@@ -99,6 +109,8 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         GridlistPane = gridList;
+        Profile.addEventHandler(MouseEvent.MOUSE_ENTERED,e->Menu.toFront());
+        Menu.addEventHandler(MouseEvent.MOUSE_EXITED,e->Menu.toBack());
     }
 
     public void PlayTrailer() {
@@ -108,7 +120,6 @@ public class Controller implements Initializable {
     public void Mylist() throws JSONException, IOException {
         Mylist.toFront();
         JSONreader json = new JSONreader();
-        System.out.println(MyList);
         if(!gridList.getChildren().isEmpty())
             gridList.getChildren().removeAll(gridList.getChildren());
         int r = 0;
@@ -124,7 +135,6 @@ public class Controller implements Initializable {
 
                 gridList.add(ap, 0, r++);
                 GridPane.setMargin(ap, new Insets(40, 50, 10, 10));
-                System.out.println("Done");
             }else{
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/sample/Mylist.fxml"));
@@ -136,7 +146,6 @@ public class Controller implements Initializable {
 
                 gridList.add(ap, 0, r++);
                 GridPane.setMargin(ap, new Insets(40, 50, 10, 10));
-                System.out.println("Done");
             }
         }
     }
@@ -145,45 +154,44 @@ public class Controller implements Initializable {
         Home.toFront();
     }
 
-    public void Addlist()  {
+    public void Addlist(ActionEvent event)  {
+    Pane pane = (Pane) ((JFXButton) event.getSource()).getParent().getParent();
+
+    if(!MyList.contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
+        MyList.add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
+        ((JFXButton) event.getSource()).setText("Added");
+        MainAdd_img.setImage(new Image("/images/check.png"));
+        MainAdd_img.setFitWidth(12);
+        MainAdd_img.setFitHeight(12);
+    }else{
+        MyList.remove((Integer) Integer.parseInt(pane.getId()));
+        ((JFXButton) event.getSource()).setText("Add list");
+        MainAdd_img.setImage(new Image("/images/plus.png"));
+        MainAdd_img.setFitWidth(8);
+        MainAdd_img.setFitHeight(8);
+        }
+    }
+
+    public void Profile(ActionEvent event) throws IOException {
+        JFXButton button = (JFXButton) event.getSource();
+        if(button.getText().equals("Login")) {
+            UserID = null;
+            connected = false;
+            Stage primaryStage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/Login/login.fxml"));
+            Parent root = loader.load();
+            primaryStage.setTitle("Login");
+            primaryStage.setResizable(false);
+            primaryStage.setScene(new Scene(root, 275, 360));
+            primaryStage.show();
+            primaryStage.addEventHandler(ActionEvent.ANY,e->{
+                UserID = ((Login.Controller) loader.getController()).GetID();
+                connected = UserID!=null;});
+        }else if(button.getText().equals("Signup")){
+            System.out.println("ID : "+UserID+"\nConnected : "+connected);
+        }else
+            ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 
     }
 }
-/*List<items> items = new ArrayList<>();
-        items item;
-
-        item = new items();
-        item.setImgUrl("https://fr.web.img2.acsta.net/c_310_420/pictures/19/04/16/09/46/5269925.jpg");
-        item.setTitle("The Perfiction");
-        item.setDate("2018");
-        item.setRate("6.1");
-        items.add(item);
-
-        item = new items();
-        item.setImgUrl("https://upload.wikimedia.org/wikipedia/en/5/5c/Apostle_poster.jpg");
-        item.setTitle("Apostle");
-        item.setDate("2018");
-        item.setRate("6.3");
-        items.add(item);
-
-        item = new items();
-        item.setImgUrl("https://vignette.wikia.nocookie.net/cinemorgue/images/c/c7/The_Wolf_of_Wall_Street_2013.jpg");
-        item.setTitle("The Wolf of Wall Street");
-        item.setDate("2013");
-        item.setRate("8.2");
-        items.add(item);
-
-        item = new items();
-        item.setImgUrl("https://upload.wikimedia.org/wikipedia/en/4/47/The_Autopsy_of_Jane_Doe.jpeg");
-        item.setTitle("The Autopsy of Jane Doe");
-        item.setDate("2016");
-        item.setRate("6.8   ");
-        items.add(item);
-
-        item = new items();
-        item.setImgUrl("https://upload.wikimedia.org/wikipedia/en/4/4d/Catch_Me_If_You_Can_2002_movie.jpg");
-        item.setTitle("Catch Me If You Ca");
-        item.setDate("2002");
-        item.setRate("8.1");
-        items.add(item);
-        */

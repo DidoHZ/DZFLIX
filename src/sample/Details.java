@@ -58,7 +58,6 @@ public class Details {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("http://image.tmdb.org/t/p/w780/"+item.getBackground()+"\nID : "+ ID);
         if(Controller.getmylist().contains(ID)){
             add_img.setImage(new Image("/images/check.png"));
             add_img.setFitWidth(10);
@@ -77,12 +76,11 @@ public class Details {
 
     public void Addmylist(ActionEvent ae) {
         Pane pane = (Pane) ((JFXButton) ae.getSource()).getParent();
-        System.out.println("Add to list ID : "+pane);
         if(!Controller.getmylist().contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
             Controller.getmylist().add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
             add_img.setImage(new Image("/images/check.png"));
-            add_img.setFitWidth(10);
-            add_img.setFitHeight(10);
+            add_img.setFitWidth(12);
+            add_img.setFitHeight(12);
         }else{
             Controller.getmylist().remove((Integer) item.getID());
             add_img.setImage(new Image("/images/plus.png"));

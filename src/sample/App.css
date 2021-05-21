@@ -81,3 +81,16 @@
 .choice-box .menu-item > .label {
 	 -fx-text-fill: white;
 }
+.profile{
+    -fx-background-radius: 30;
+    -fx-border-radius: 8;
+    -fx-border-width: 4px;
+    -fx-border-color: white;
+    -fx-background-image: url('../images/user4.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-background-size: 30px;
+}
+.menu:hover{
+    -fx-background-color: rgba(255, 255, 255,0.5);
+}

@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,7 +14,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.json.JSONException;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,8 +50,7 @@ public class SeriesDetails {
     @FXML
     private JFXButton exit;
 
-
-    private items item = new items();
+    private  String ID;
 
     private void FillList(ArrayList<items> items) throws IOException {
         int r = 0;
@@ -77,12 +74,13 @@ public class SeriesDetails {
         exit.addEventHandler(MouseEvent.MOUSE_CLICKED,e->stage.close());
 
         JSONreader json = new JSONreader();
+        items item = new items();
+        this.ID = ""+ID;
         try {
             item = json.getSeriesDetails(ID);
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        System.out.println("http://image.tmdb.org/t/p/w780/"+item.getBackground()+"\nID : "+ ID);
         if(Controller.getmylist().contains(ID)){
             add_img.setImage(new Image("/images/check.png"));
             add_img.setFitWidth(10);
@@ -114,14 +112,13 @@ public class SeriesDetails {
 
     public void Addmylist(ActionEvent ae) {
         Pane pane = (Pane) ((JFXButton) ae.getSource()).getParent();
-        System.out.println("Add to list ID : "+pane);
         if(!Controller.getmylist().contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
             Controller.getmylist().add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
             add_img.setImage(new Image("/images/check.png"));
-            add_img.setFitWidth(10);
-            add_img.setFitHeight(10);
+            add_img.setFitWidth(12);
+            add_img.setFitHeight(12);
         }else{
-            Controller.getmylist().remove((Integer) item.getID());
+            Controller.getmylist().remove(Integer.valueOf(ID));
             add_img.setImage(new Image("/images/plus.png"));
             add_img.setFitWidth(8);
             add_img.setFitHeight(8);

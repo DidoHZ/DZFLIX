@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +64,6 @@ public class JSONreader {
     }
     public items getSeriesDetails(int id) throws IOException, JSONException {
         items item = new items();
-        System.out.println(BaseUrl+tv+id+api+language);
         JSONObject jsonObj = getJSON(new URL(BaseUrl+tv+id+api+language));
 
         item.setID(id);
@@ -89,7 +87,6 @@ public class JSONreader {
 
     public items getMovieDetails(int id) throws IOException, JSONException {
         items item = new items();
-        System.out.println(BaseUrl+movie+id+api+language);
         JSONObject jsonObj = getJSON(new URL(BaseUrl+movie+id+api+language));
 
         item.setID(id);
@@ -132,7 +129,7 @@ public class JSONreader {
             item.setImgUrl("http://image.tmdb.org/t/p/w154/"+myArr.getJSONObject(i).getString("poster_path"));
             item.setTitle(myArr.getJSONObject(i).getString("title"));
             if(item.getType().equals("movie"))
-                item.setDate(myArr.getJSONObject(i).getString("release_date").split("-")[0]);
+                item.setDate(myArr.getJSONObject(i).getString("release_date").split("-")[0]); //2019-
             else
                 item.setDate(myArr.getJSONObject(i).getString("first_air_date").split("-")[0]);
             items.add(item);

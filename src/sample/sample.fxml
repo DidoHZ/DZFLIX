@@ -54,10 +54,13 @@
                <Insets right="30.0" />
             </HBox.margin>
          </JFXButton>
-         <JFXButton layoutX="446.0" layoutY="10.0" prefHeight="46.0" prefWidth="64.0" ripplerFill="#86b5e8" text=" ">
+         <JFXButton fx:id="Profile" layoutX="446.0" layoutY="10.0" prefHeight="36.0" prefWidth="36.0" ripplerFill="#86b5e8" styleClass="profile" stylesheets="@App.css" text=" ">
             <HBox.margin>
-               <Insets left="50.0" />
+               <Insets left="30.0" top="5.0" />
             </HBox.margin>
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
          </JFXButton>
       </HBox>
    </top>
@@ -86,6 +89,13 @@
                            </children></VBox>
                      </content>
                   </ScrollPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="Menu" prefHeight="90.0" prefWidth="100.0" style="-fx-background-color: rgba(0, 0, 0,0.5); -fx-background-radius: 10px;" translateX="785.0">
+               <children>
+                  <JFXButton fx:id="Login" layoutY="2.0" onAction="#Profile" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 10 10 0 0;" styleClass="menu" stylesheets="@App.css" text="Login" textFill="WHITE" />
+                  <JFXButton fx:id="Signup" layoutY="35.0" onAction="#Profile" prefHeight="30.0" prefWidth="100.0" styleClass="menu" stylesheets="@App.css" text="Signup" textFill="WHITE" />
+                  <JFXButton fx:id="Exit" layoutY="65.0" onAction="#Profile" prefHeight="30.0" prefWidth="100.0" style="-fx-background-radius: 0 0 10 10;" styleClass="menu" stylesheets="@App.css" text="Exit" textFill="WHITE" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="Home" layoutX="10.0" layoutY="10.0" prefHeight="554.0" prefWidth="900.0" style="-fx-background-color: #0d0c11;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -154,7 +164,7 @@
                                                 </Lighting>
                                              </effect>
                                              <graphic>
-                                                <ImageView fitHeight="8.0" fitWidth="8.0" pickOnBounds="true" preserveRatio="true">
+                                                <ImageView fx:id="MainAdd_img" fitHeight="8.0" fitWidth="8.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
                                                       <Image url="@../images/plus.png" />
                                                    </image>
