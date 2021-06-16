@@ -1,5 +1,6 @@
 package sample;
 
+import Login.GetData;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,9 @@ import javafx.stage.Stage;
 import org.json.JSONException;
 
 import java.io.IOException;
+
+import static sample.Controller.UserID;
+import static sample.Controller.connected;
 
 public class Details {
     public ImageView add_img;
@@ -46,13 +50,14 @@ public class Details {
     private JFXButton exit;
 
 
-    private items item = new items();
+
 
     public void setData(Stage stage,int ID){
 
         exit.addEventHandler(MouseEvent.MOUSE_CLICKED,e->stage.close());
 
         JSONreader json = new JSONreader();
+        items item = new items();
         try {
             item = json.getMovieDetails(ID);
         } catch (IOException | JSONException e) {
@@ -76,13 +81,21 @@ public class Details {
 
     public void Addmylist(ActionEvent ae) {
         Pane pane = (Pane) ((JFXButton) ae.getSource()).getParent();
-        if(!Controller.getmylist().contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
-            Controller.getmylist().add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
+        int ItemID = Integer.parseInt(pane.getId().replaceAll("[^0-9]",""));
+        if(!Controller.getmylist().contains(ItemID)) {
+            System.out.println("UserID : "+(UserID!=null?UserID:"null"));
+            if(connected){
+                GetData.AddToUserList(UserID,ItemID,(new JSONreader()).CheckType(ItemID));
+            }
+            Controller.getmylist().add(ItemID);
             add_img.setImage(new Image("/images/check.png"));
             add_img.setFitWidth(12);
             add_img.setFitHeight(12);
         }else{
-            Controller.getmylist().remove((Integer) item.getID());
+            if(connected){
+                GetData.DeleteFromUserList(UserID,ItemID);
+            }
+            Controller.getmylist().remove((Integer) ItemID);
             add_img.setImage(new Image("/images/plus.png"));
             add_img.setFitWidth(8);
             add_img.setFitHeight(8);

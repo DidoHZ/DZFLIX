@@ -1,5 +1,6 @@
 package sample;
 
+import Login.GetData;
 import com.jfoenix.controls.JFXButton;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,6 +17,9 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static sample.Controller.UserID;
+import static sample.Controller.connected;
 
 public class SeriesDetails {
     public ImageView add_img;
@@ -50,8 +54,6 @@ public class SeriesDetails {
     @FXML
     private JFXButton exit;
 
-    private  String ID;
-
     private void FillList(ArrayList<items> items) throws IOException {
         int r = 0;
         if(!Episodes.getChildren().isEmpty())
@@ -75,7 +77,6 @@ public class SeriesDetails {
 
         JSONreader json = new JSONreader();
         items item = new items();
-        this.ID = ""+ID;
         try {
             item = json.getSeriesDetails(ID);
         } catch (IOException | JSONException e) {
@@ -87,6 +88,7 @@ public class SeriesDetails {
             add_img.setFitHeight(10);
         }
         Main_show.setId(""+ID);
+        System.out.println("https://api.themoviedb.org/3/tv/"+ID+"?api_key=c4ca447c00aab9e96d6f9b202dbdf289");
         Main_show.setStyle("-fx-background-image: url(http://image.tmdb.org/t/p/w780"+item.getBackground()+"); -fx-background-repeat: no-repeat; -fx-background-size: 450px 210px;");
         img.setImage(new Image("http://image.tmdb.org/t/p/original"+item.getImgUrl()));
         title.setText(item.getTitle());
@@ -112,13 +114,21 @@ public class SeriesDetails {
 
     public void Addmylist(ActionEvent ae) {
         Pane pane = (Pane) ((JFXButton) ae.getSource()).getParent();
-        if(!Controller.getmylist().contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
-            Controller.getmylist().add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
+        int ItemID = Integer.parseInt(pane.getId().replaceAll("[^0-9]",""));
+        if(!Controller.getmylist().contains(ItemID)) {
+            System.out.println("UserID : "+(UserID!=null?UserID:"null"));
+            if(connected){
+                GetData.AddToUserList(UserID,ItemID,(new JSONreader()).CheckType(ItemID));
+            }
+            Controller.getmylist().add(ItemID);
             add_img.setImage(new Image("/images/check.png"));
             add_img.setFitWidth(12);
             add_img.setFitHeight(12);
         }else{
-            Controller.getmylist().remove(Integer.valueOf(ID));
+            if(connected){
+                GetData.DeleteFromUserList(UserID,ItemID);
+            }
+            Controller.getmylist().remove((Integer) ItemID);
             add_img.setImage(new Image("/images/plus.png"));
             add_img.setFitWidth(8);
             add_img.setFitHeight(8);

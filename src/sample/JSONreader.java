@@ -38,6 +38,8 @@ public class JSONreader {
 
         return new JSONObject(response.toString());
     }
+
+
     public ArrayList<items> getEpisodes(int id ,int se) throws IOException, JSONException {
         JSONArray myArr = getJSON(new URL(BaseUrl+tv+id+"/season/"+se+api+language)).getJSONArray("episodes");
         ArrayList<items> items = new ArrayList<>();
@@ -71,7 +73,10 @@ public class JSONreader {
         item.setImgUrl(jsonObj.getString("poster_path"));
         item.setBackground(jsonObj.getString("backdrop_path"));
         item.setTitle(jsonObj.getString("name"));
-        item.setDate(jsonObj.getString("last_air_date").split("-")[0]);
+        try {
+            item.setDate(jsonObj.getString("last_air_date").split("-")[0]);
+        }catch (Exception e){
+            item.setDate("????");}
         item.setRate(""+jsonObj.getDouble("vote_average"));
         item.setDuration(jsonObj.getInt("number_of_seasons"));
         item.setDescription(jsonObj.getString("overview"));
@@ -141,12 +146,20 @@ public class JSONreader {
         return getMovieDetails(getJSON(new URL(BaseUrl+Trends+api)).getJSONArray("results").getJSONObject(0).getInt("id"));
     }
 
-    public List<items> get_Trends() throws Exception {
+    public List<items> get_Trends(String type) throws Exception {
+        switch(type){
+            case "all":
+                return getTrendsDetails(getJSON(new URL(BaseUrl+Trends+api)).getJSONArray("results"));
+            case "Movies":
+                return getTrendsMoviesDetails(getJSON(new URL(BaseUrl+popular+api)).getJSONArray("results"));
+            case "Series":
+                return getTrendsSeriesDetails(getJSON(new URL(BaseUrl+SeriesPopular+api)).getJSONArray("results"));
+        }
+        return new ArrayList<>();
+    }
 
+    private List<items> getTrendsDetails(JSONArray myArr) throws JSONException {
         List<items> items = new ArrayList<>();
-
-        JSONArray myArr = getJSON(new URL(BaseUrl+Trends+api)).getJSONArray("results");
-
         for(int i=1;i<20;i++){
             items item = new items();
             item.setID(myArr.getJSONObject(i).getInt("id"));
@@ -160,6 +173,38 @@ public class JSONreader {
                 item.setDate(myArr.getJSONObject(i).getString("release_date").split("-")[0]);
             else
                 item.setDate(myArr.getJSONObject(i).getString("first_air_date").split("-")[0]);
+            item.setDescription(myArr.getJSONObject(i).getString("overview"));
+            item.setRate(""+myArr.getJSONObject(i).getDouble("vote_average"));
+            items.add(item);
+        }
+        return items;
+    }
+
+    private List<items> getTrendsMoviesDetails(JSONArray myArr) throws JSONException {
+        List<items> items = new ArrayList<>();
+        for(int i=1;i<20;i++){
+            items item = new items();
+            item.setID(myArr.getJSONObject(i).getInt("id"));
+            item.setType("movie");
+            item.setImgUrl("http://image.tmdb.org/t/p/w154/"+myArr.getJSONObject(i).getString("poster_path"));
+            item.setTitle(myArr.getJSONObject(i).getString("title"));
+            item.setDate(myArr.getJSONObject(i).getString("release_date").split("-")[0]);
+            item.setDescription(myArr.getJSONObject(i).getString("overview"));
+            item.setRate(""+myArr.getJSONObject(i).getDouble("vote_average"));
+            items.add(item);
+        }
+        return items;
+    }
+
+    private List<items> getTrendsSeriesDetails(JSONArray myArr) throws JSONException {
+        List<items> items = new ArrayList<>();
+        for(int i=1;i<20;i++){
+            items item = new items();
+            item.setID(myArr.getJSONObject(i).getInt("id"));
+            item.setType("tv");
+            item.setImgUrl("http://image.tmdb.org/t/p/w154/"+myArr.getJSONObject(i).getString("poster_path"));
+            item.setTitle(myArr.getJSONObject(i).getString("name"));
+            item.setDate(myArr.getJSONObject(i).getString("first_air_date").split("-")[0]);
             item.setDescription(myArr.getJSONObject(i).getString("overview"));
             item.setRate(""+myArr.getJSONObject(i).getDouble("vote_average"));
             items.add(item);

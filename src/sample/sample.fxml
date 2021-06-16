@@ -184,7 +184,7 @@
                               </Pane>
                               <HBox prefHeight="61.0" prefWidth="900.0">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" selected="true" styleClass="trend" stylesheets="@App.css" text="Trends Now" textFill="WHITE">
+                                    <RadioButton mnemonicParsing="false" onMouseReleased="#Trend" prefHeight="64.0" prefWidth="100.0" selected="true" styleClass="trend" stylesheets="@App.css" text="Trends Now" textFill="WHITE">
                                        <HBox.margin>
                                           <Insets left="185.0" right="50.0" />
                                        </HBox.margin>
@@ -195,7 +195,7 @@
                                           <Insets left="15.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Movies" textFill="WHITE" toggleGroup="$Trend">
+                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" onMouseReleased="#Trend" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Movies" textFill="WHITE" toggleGroup="$Trend">
                                        <HBox.margin>
                                           <Insets right="50.0" />
                                        </HBox.margin>
@@ -203,7 +203,7 @@
                                           <Insets left="31.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Series" textFill="WHITE" toggleGroup="$Trend">
+                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" onMouseReleased="#Trend" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Series" textFill="WHITE" toggleGroup="$Trend">
                                        <HBox.margin>
                                           <Insets right="50.0" />
                                        </HBox.margin>
@@ -211,7 +211,7 @@
                                           <Insets left="35.0" />
                                        </padding>
                                     </RadioButton>
-                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Popular" textFill="WHITE" toggleGroup="$Trend">
+                                    <RadioButton layoutX="345.0" layoutY="10.0" mnemonicParsing="false" onMouseReleased="#Trend" prefHeight="64.0" prefWidth="100.0" styleClass="trend" stylesheets="@App.css" text="Popular" textFill="WHITE" toggleGroup="$Trend">
                                        <HBox.margin>
                                           <Insets right="50.0" />
                                        </HBox.margin>

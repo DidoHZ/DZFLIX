@@ -1,5 +1,6 @@
 package sample;
 
+import Login.GetData;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,9 +16,10 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-public class Mylist {
-    private items item;
+import static sample.Controller.UserID;
+import static sample.Controller.connected;
 
+public class Mylist {
     @FXML
     private Label rate_lbl;
 
@@ -34,8 +36,11 @@ public class Mylist {
 
     public JFXButton Moreinfo;
 
+    private String Type;
+    private int ID;
+
     public void setData(items item){
-        this.item = item;
+        ID = item.getID(); Type = item.getType();
         list_img.setImage(new Image("http://image.tmdb.org/t/p/w154/"+item.getImgUrl()));
         rate_lbl.setText(item.getRate());
         list_title.setText(item.getTitle());
@@ -44,9 +49,12 @@ public class Mylist {
 
     @FXML
     void delete() {
-        Controller.getmylistGrid_().getChildren().remove(Controller.getmylistGrid_().getChildren().get(Controller.getmylist().indexOf(item.getID())));
+        Controller.getmylistGrid_().getChildren().remove(Controller.getmylistGrid_().getChildren().get(Controller.getmylist().indexOf(ID)));
         try {
-            Controller.getmylist().remove((Integer) item.getID());
+            if(connected){
+                GetData.DeleteFromUserList(UserID,ID);
+            }
+            Controller.getmylist().remove((Integer) ID);
         } catch (Exception e) {
         }
     }
@@ -54,7 +62,7 @@ public class Mylist {
     public void MoreDetails(ActionEvent event) throws JSONException, IOException {
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        if(item.getType().equals("movie")) {
+        if(Type.equals("movie")) {
             loader.setLocation(getClass().getResource("/sample/Details.fxml"));
 
             Scene scene = null;
@@ -65,7 +73,7 @@ public class Mylist {
             }
 
             Details details = loader.getController();
-            details.setData(stage, item.getID());
+            details.setData(stage, ID);
 
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.initStyle(StageStyle.TRANSPARENT);
@@ -82,7 +90,7 @@ public class Mylist {
             }
 
             SeriesDetails details = loader.getController();
-            details.setData(stage, item.getID());
+            details.setData(stage, ID);
 
             stage.initOwner(((Node) event.getSource()).getScene().getWindow());
             stage.initStyle(StageStyle.TRANSPARENT);

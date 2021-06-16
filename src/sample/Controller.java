@@ -1,5 +1,6 @@
 package sample;
 
+import Login.GetData;
 import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,13 +11,17 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -55,9 +60,9 @@ public class Controller implements Initializable {
     private JFXButton Exit;
     private static GridPane GridlistPane;
     private final JSONreader json = new JSONreader();
-    private static final ArrayList<Integer>  MyList = new ArrayList<>();
-    private boolean connected;
-    private String UserID;
+    private static ArrayList<Integer>  MyList = new ArrayList<>();
+    public static boolean connected;
+    public static String UserID;
 
     static GridPane getmylistGrid_(){ return GridlistPane; }
     static ArrayList<Integer>getmylist(){
@@ -79,17 +84,19 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        List<items> items = new ArrayList<items>(){
-            {
-                try {
-                    this.addAll(json.get_Trends());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        try {
+            FillGridList(json.get_Trends("all"));
+        } catch (Exception e) { e.printStackTrace();}
 
+        GridlistPane = gridList;
+        Profile.addEventHandler(MouseEvent.MOUSE_ENTERED,e->Menu.toFront());
+        Menu.addEventHandler(MouseEvent.MOUSE_EXITED,e->Menu.toBack());
+    }
+
+    public void FillGridList(List<items> items){
         int c = 0,r = 1;
+        if(!grid.getChildren().isEmpty())
+            grid.getChildren().removeAll(grid.getChildren());
         try {
             for (items item : items) {
                 FXMLLoader loader = new FXMLLoader();
@@ -108,9 +115,6 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        GridlistPane = gridList;
-        Profile.addEventHandler(MouseEvent.MOUSE_ENTERED,e->Menu.toFront());
-        Menu.addEventHandler(MouseEvent.MOUSE_EXITED,e->Menu.toBack());
     }
 
     public void PlayTrailer() {
@@ -119,7 +123,6 @@ public class Controller implements Initializable {
 
     public void Mylist() throws JSONException, IOException {
         Mylist.toFront();
-        JSONreader json = new JSONreader();
         if(!gridList.getChildren().isEmpty())
             gridList.getChildren().removeAll(gridList.getChildren());
         int r = 0;
@@ -156,15 +159,22 @@ public class Controller implements Initializable {
 
     public void Addlist(ActionEvent event)  {
     Pane pane = (Pane) ((JFXButton) event.getSource()).getParent().getParent();
-
-    if(!MyList.contains(Integer.valueOf(pane.getId().replaceAll("[^0-9]","")))) {
+    int ItemID = Integer.parseInt(pane.getId().replaceAll("[^0-9]",""));
+    if(!MyList.contains(ItemID)){
+        System.out.println("UserID : "+(UserID!=null?UserID:"null"));
+        if(connected){
+            GetData.AddToUserList(UserID,ItemID,json.CheckType(ItemID));
+        }
         MyList.add(Integer.valueOf(pane.getId().replaceAll("[^0-9]", "")));
         ((JFXButton) event.getSource()).setText("Added");
         MainAdd_img.setImage(new Image("/images/check.png"));
         MainAdd_img.setFitWidth(12);
         MainAdd_img.setFitHeight(12);
     }else{
-        MyList.remove((Integer) Integer.parseInt(pane.getId()));
+        if(connected){
+            GetData.DeleteFromUserList(UserID,ItemID);
+        }
+        MyList.remove((Integer) ItemID);
         ((JFXButton) event.getSource()).setText("Add list");
         MainAdd_img.setImage(new Image("/images/plus.png"));
         MainAdd_img.setFitWidth(8);
@@ -175,23 +185,41 @@ public class Controller implements Initializable {
     public void Profile(ActionEvent event) throws IOException {
         JFXButton button = (JFXButton) event.getSource();
         if(button.getText().equals("Login")) {
-            UserID = null;
-            connected = false;
             Stage primaryStage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/Login/login.fxml"));
             Parent root = loader.load();
+            Scene scene = new Scene(root, 275, 370);
+            scene.setFill(Color.TRANSPARENT);
+            primaryStage.initStyle(StageStyle.TRANSPARENT);
+            primaryStage.initOwner(((Node)event.getSource()).getScene().getWindow());
+            primaryStage.initModality(Modality.APPLICATION_MODAL);
             primaryStage.setTitle("Login");
             primaryStage.setResizable(false);
-            primaryStage.setScene(new Scene(root, 275, 360));
+            primaryStage.setScene(scene);
             primaryStage.show();
             primaryStage.addEventHandler(ActionEvent.ANY,e->{
                 UserID = ((Login.Controller) loader.getController()).GetID();
-                connected = UserID!=null;});
+                if(connected = UserID!=null){
+                    GridlistPane.getChildren().removeAll(GridlistPane.getChildren());
+                    MyList = new ArrayList<>();
+                    MyList.addAll(GetData.getUserList(UserID));
+                }
+            });
         }else if(button.getText().equals("Signup")){
             System.out.println("ID : "+UserID+"\nConnected : "+connected);
         }else
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).close();
 
+    }
+
+    public void Trend(MouseEvent event) throws Exception {
+        RadioButton rb = (RadioButton) event.getSource();
+        if((rb.getText().equals("Trends Now") || rb.getText().equals("Popular")) && rb.isSelected())
+            FillGridList(json.get_Trends("all"));
+        if(rb.getText().equals("Movies") && rb.isSelected())
+            FillGridList(json.get_Trends("Movies"));
+        if(rb.getText().equals("Series") && rb.isSelected())
+            FillGridList(json.get_Trends("Series"));
     }
 }

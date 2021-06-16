@@ -1,8 +1,7 @@
 package Login;
 
-import sample.JSONreader;
-
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GetData {
 
@@ -17,7 +16,7 @@ public class GetData {
             ResultSet rs = stmt.executeQuery(query);
             rs.next();
             if (rs.getString(2).equals(user) && rs.getString(3).equals(pass)) {
-                Controller.setID(rs.getString(1));
+                Controller.ID = rs.getString(1);
                 return true;
             }
         } catch (SQLException | ClassNotFoundException e) {
@@ -26,13 +25,10 @@ public class GetData {
         return false;
     }
 
-    public static void signup(String user, String pass) {
+    public static void signup(String user, String pass) throws SQLException, ClassNotFoundException {
         String query = "insert into users (username,pass) values ('" + user + "','" + pass + "')";
-        try (Statement stmt = GetConnection().createStatement()) {
-            stmt.executeUpdate(query);
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-        }
+        Statement stmt = GetConnection().createStatement();
+        stmt.executeUpdate(query);
     }
 
     public static boolean CheckUser(String user){
@@ -47,5 +43,33 @@ public class GetData {
         }
         return false;
     }
-
+    public static ArrayList<Integer> getUserList(String ID){
+        ArrayList<Integer> item = new ArrayList<>();
+        String query = "select link from mylist where id='"+ID+"'";
+        try (Statement stmt = GetConnection().createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            while(rs.next()) {
+                item.add(rs.getInt(1));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return item;
+    }
+    public static void AddToUserList(String UID, int ItemID, String Type){
+        String query = "insert into mylist values ("+UID+",'"+ItemID+"','"+Type+"')";
+        try (Statement stmt = GetConnection().createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    public static void DeleteFromUserList(String UID, int ItemID){
+        String query = "delete from mylist where id='"+UID+"' and link='"+ItemID+"'";
+        try (Statement stmt = GetConnection().createStatement()) {
+            stmt.executeUpdate(query);
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
     }

@@ -1,20 +1,31 @@
 #text-field {
-    -fx-background-color: -fx-text-box-border , white;
+    -fx-background-color: -fx-text-box-border , #515151;
+    -fx-text-inner-color: white;
     -fx-background-insets: 0, 0 0 1 0 ;
     -fx-background-radius: 0 ;
 }
+
 #text-field:focused {
-    -fx-background-color:  red, white;
+    -fx-background-color:  red, #515151;
 }
 .button{
 	-fx-background-radius:  30px;
-	-fx-background-color: white;
-	-fx-border-color:  red;
-	-fx-border-radius: 30px;
+	-fx-background-color: red;
 }
 .button:hover{
-	-fx-background-color: red;
+	-fx-background-color: #ff4242;
+}
+.button:pressed{
+    -fx-background-color:  red;
 }
 .edit:hover{
     -fx-text-fill: red;
+}
+.exit{
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-min-width:0px;
+    -fx-min-height:0px;
+    -fx-background-radius: 50;
+    -fx-border-radius: 50;
 }

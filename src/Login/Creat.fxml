@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -10,14 +11,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="275.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.Creat">
-    <VBox layoutX="159.0" layoutY="60.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: red;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="375.0" prefWidth="275.0" style="-fx-background-color: rgba(0,0,0,0); -fx-background-radius: 15;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Login.Creat">
+    <VBox layoutX="159.0" layoutY="60.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: rgba(0,0,0,0.8); -fx-background-radius: 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <Pane prefHeight="127.0" prefWidth="334.0" style="-fx-background-color: transparent;">
             <padding>
                 <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
             </padding>
          <children>
-            <Label alignment="TOP_LEFT" layoutY="6.0" prefHeight="48.0" prefWidth="275.0" text="Welcome" textFill="WHITE">
+            <Label alignment="TOP_LEFT" layoutY="6.0" prefHeight="48.0" prefWidth="275.0" text="NETFLIX" textFill="RED">
                <padding>
                   <Insets left="5.0" top="15.0" />
                </padding>
@@ -25,7 +26,7 @@
                   <Font name="Corbel Bold Italic" size="27.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" layoutY="47.0" prefHeight="48.0" prefWidth="275.0" text="To login interface app" textFill="WHITE">
+            <Label alignment="TOP_LEFT" layoutY="47.0" prefHeight="48.0" prefWidth="275.0" text="Thanks for joing us" textFill="WHITE">
                <padding>
                   <Insets left="15.0" />
                </padding>
@@ -33,14 +34,19 @@
                   <Font name="Corbel" size="14.0" />
                </font>
             </Label>
+            <JFXButton layoutX="235.0" layoutY="13.0" minWidth="-Infinity" onAction="#exit" prefHeight="16.0" prefWidth="16.0" ripplerFill="WHITE" styleClass="exit" stylesheets="@style.css" textFill="WHITE">
+               <font>
+                  <Font name="Symbol" size="14.0" />
+               </font>
+            </JFXButton>
          </children>
         </Pane>
-        <Pane layoutX="10.0" layoutY="10.0" prefHeight="350.0" prefWidth="334.0" style="-fx-background-radius: 30px 30px 0px 0px; -fx-background-color: white;">
+        <Pane layoutX="10.0" layoutY="10.0" prefHeight="350.0" prefWidth="334.0" style="-fx-background-radius: 30px 30px 0px 0px; -fx-background-color: rgba(0,0,0,0.5);">
             <TextField id="text-field" fx:id="User_fld" layoutX="14.0" layoutY="58.0" onKeyReleased="#UserAction" prefHeight="25.0" prefWidth="245.0" promptText="Username" stylesheets="@style.css" />
             <PasswordField id="text-field" fx:id="Pass_fld" layoutX="14.0" layoutY="114.0" prefHeight="25.0" prefWidth="245.0" promptText="Password" stylesheets="@style.css" />
             <PasswordField id="text-field" fx:id="Pass_fld1" layoutX="14.0" layoutY="168.0" onKeyReleased="#ConfirmeAction" prefHeight="25.0" prefWidth="245.0" promptText="Confirm Password" stylesheets="@style.css" />
-            <Button layoutX="103.0" layoutY="223.0" mnemonicParsing="false" onMousePressed="#SingUp" stylesheets="@style.css" text="Singup" />
-         <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="47.0" layoutY="6.0" prefHeight="25.0" prefWidth="168.0" text="Sing Up" textFill="RED">
+            <Button layoutX="103.0" layoutY="223.0" mnemonicParsing="false" onMousePressed="#SingUp" stylesheets="@style.css" text="Singup" textFill="WHITE" />
+         <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="47.0" layoutY="6.0" prefHeight="25.0" prefWidth="168.0" text="Sing Up" textFill="WHITE">
             <font>
                <Font size="23.0" />
             </font>
@@ -48,7 +54,7 @@
                <Insets />
             </opaqueInsets>
          </Label>
-         <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="207.0" layoutY="226.0" onMousePressed="#BackAction" prefHeight="17.0" prefWidth="54.0" styleClass="edit" stylesheets="@style.css" text="Back" textFill="#28a3d0">
+         <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="10.0" layoutX="207.0" layoutY="226.0" onMousePressed="#BackAction" prefHeight="17.0" prefWidth="54.0" styleClass="edit" stylesheets="@style.css" text="Back" textFill="WHITE">
             <font>
                <Font size="14.0" />
             </font>

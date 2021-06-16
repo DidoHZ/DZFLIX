@@ -1,5 +1,6 @@
 package Login;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -11,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,29 +27,29 @@ public class Controller  implements Initializable {
     public Label Message_lbl;
     public static String ID;
 
-    static void setID(String str){
-        ID = str;
-    }
     public String GetID(){
         return ID;
     }
 
     //login Alert
-    private void Alert_(Boolean status){
+        private void Alert_(Boolean status,Stage stage) {
         Message_lbl.setTextFill(status?Color.GREEN:Color.TOMATO);
         Message_lbl.setText(status?"Login Successfully":"Incorrect Mail/Password.");
     }
 
     //Login Mouse Pressed Action
-    public void Login() {
+    public void Login(MouseEvent event) {
         //Alert_(Database.Contains(User_fld.getText()) && Database.Check(User_fld.getText(),MD5.getMd5(Pass_fld.getText())));
-        Alert_(GetData.Login(User_fld.getText(),MD5.getMd5(Pass_fld.getText())));
+        Alert_(GetData.Login(User_fld.getText(),MD5.getMd5(Pass_fld.getText())), (Stage) ((Node)event.getSource()).getScene().getWindow());
     }
 
     public void NewAccount(MouseEvent event) throws IOException {
         Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Creat.fxml")));
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        //stage.initOwner(((Stage)((Node) event.getSource()).getScene().getWindow()).getOwner());
+        stage.setScene(scene);
         stage.show();
     }
 
@@ -58,5 +60,9 @@ public class Controller  implements Initializable {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
         }
+    }
+
+    public void exit(ActionEvent event) {
+        ((Stage)((Node) event.getSource()).getScene().getWindow()).close();
     }
 }
